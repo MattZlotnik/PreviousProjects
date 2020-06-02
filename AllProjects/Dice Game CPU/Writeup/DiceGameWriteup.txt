@@ -1,0 +1,8 @@
+Dice Game CPU:
+
+The objective of this project was to create an AI which could play a dice game. The
+rules of the game are simple: Players take turns rolling dice until they reach 100 total
+points. On a player's turn, she can roll as many dice as possible until a 1 is rolled. 
+After each roll, a player can choose to add the sum of their rolls to their total score,
+or continue rolling as desired. Once a 1 is rolled, the player adds 1 to their total score
+and their turn ends. 
