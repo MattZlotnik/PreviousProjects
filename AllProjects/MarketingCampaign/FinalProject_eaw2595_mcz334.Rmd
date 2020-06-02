@@ -1,0 +1,246 @@
+---
+title: "Marketing_FinalProject"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#Data Cleaning + Feature Engineering
+```{r}
+library("readxl")
+
+#read in data
+campaign_data <- read_excel("marketing_campaign.xlsx")
+campaign_data
+```
+
+```{r}
+library(dplyr)
+
+#remove features acceptcampaign, Z_CostContact, Z_Revenue
+campaign_data <- select(campaign_data, -AcceptedCmp1, -AcceptedCmp2, -AcceptedCmp3, -AcceptedCmp4, -AcceptedCmp5, -Z_CostContact, -Z_Revenue)
+campaign_data
+```
+
+```{r}
+library(tidyr)
+
+#drop NAs-- there were 24 NAs in income that were removed
+campaign_data <- campaign_data %>% drop_na()
+campaign_data
+```
+
+```{r}
+#create feature age
+campaign_data["Age"] <- 2020- campaign_data["Year_Birth"]
+campaign_data
+```
+
+```{r}
+#after the creation of Age feature, drop Year_Birth from data
+campaign_data1 <- select(campaign_data, -Year_Birth)
+campaign_data1
+```
+
+```{r}
+#create data set with only the numerical features for PCA, also removing ID since it doesn't really have meaning in a PCA context and response since that is what we're trying to predict
+campaign_data_num <- select(campaign_data1, -ID, -Dt_Customer, -Education, -Marital_Status, -Response)
+campaign_data_num 
+
+#confirm all data are now numeric
+str(campaign_data_num)
+```
+
+```{r}
+#standardize all data
+scaled_campaign_data <- scale(campaign_data_num)
+head(scaled_campaign_data)
+
+#check mean=0 to confirm it was standardized
+colMeans(scaled_campaign_data)
+```
+
+#PCA
+```{r}
+library(factoextra)
+
+campaign_pca <- prcomp(scaled_campaign_data, center= TRUE)
+summary(campaign_pca)
+```
+
+##sqrt of eigenvalues
+```{r}
+#sqrt of eigenvalues
+sqrt_eigs <- campaign_pca$sdev
+eigs <- campaign_pca$sdev^2
+eigs
+```
+
+##loadings
+```{r}
+#loadings
+campaign_pca$rotation
+```
+
+##PCA scores 
+```{r}
+# PCs (aka scores) for each customer
+campaign_pca$x
+```
+
+
+```{r}
+#save PCA scores for each customer in df
+PCA_scores <- campaign_pca$x
+PCA_scores_df <- data.frame(PCA_scores)
+PCA_scores_df
+```
+
+
+```{r}
+screeplot(campaign_pca)
+```
+
+##look at results for variables specifically
+```{r}
+#PCA results for the variables
+var <- get_pca_var(campaign_pca)
+var
+```
+
+```{r}
+#coordinates for the variables
+var$coord
+```
+
+##correlations
+```{r}
+#correlations between variables and dimensions-- for interpretation of the different PCs
+var$cor
+```
+
+
+```{r}
+#contributions of the variables
+var$contrib
+```
+
+
+#Simple Logit and Probit for baseline
+```{r}
+campaign_data2 <- select(campaign_data1, -ID, -Dt_Customer)
+
+#standardize numeric features
+campaign_data2 <- campaign_data2 %>% mutate_at(c("Income", "Kidhome", "Teenhome", "Recency", "MntWines", "MntFruits", "MntMeatProducts", "MntFishProducts", "MntSweetProducts", "MntGoldProds", "NumDealsPurchases", "NumWebPurchases", "NumCatalogPurchases", "NumStorePurchases", "NumWebVisitsMonth", "Complain", "Age"), ~(scale(.) %>% as.vector))
+
+#change categorical variables to factors
+campaign_data2$Education <- as.factor(campaign_data2$Education)
+campaign_data2$Marital_Status <- as.factor(campaign_data2$Marital_Status)
+
+campaign_data2
+```
+
+```{r}
+str(campaign_data2)
+```
+
+##Logit Model
+```{r}
+#logit model
+logit_mod= glm(Response~., data=campaign_data2,family=binomial(link="logit"))
+summary(logit_mod)
+```
+
+```{r}
+AIC(logit_mod)
+BIC(logit_mod)
+```
+
+##Probit model
+```{r}
+#probit model
+probit_mod= glm(Response~., data=campaign_data2,family=binomial(link="probit"))
+summary(probit_mod)
+```
+
+```{r}
+AIC(probit_mod)
+BIC(probit_mod)
+```
+
+
+#Random Effect Model
+```{r}
+str(campaign_data2)
+```
+
+```{r}
+#make a copy of the data
+campaign_data2_re <- campaign_data2
+
+#change Teenhome to factor to be used as the random effect
+campaign_data2_re$Teenhome <- as.factor(campaign_data2_re$Teenhome)
+
+#check str
+str(campaign_data2_re)
+```
+
+##model
+```{r}
+library(lme4)
+poiss_mod =glmer(Response~ Education+ Marital_Status + Income+ Kidhome+ Recency+ MntWines+ MntFruits+ MntMeatProducts+ MntFishProducts+ MntSweetProducts+ MntGoldProds+ NumDealsPurchases+ NumWebPurchases+ NumCatalogPurchases+ NumWebVisitsMonth+ Complain+ Age+ (1|Teenhome),data=campaign_data2_re, family=poisson)
+summary(poiss_mod)
+```
+
+```{r}
+AIC(poiss_mod)
+BIC(poiss_mod)
+```
+
+#PCA Models
+```{r}
+PCA_scores_df
+
+#only include 5 PCs in model, so select out those 5
+PCA5 <- select(PCA_scores_df, PC1, PC2, PC3, PC4, PC5)
+PCA5
+```
+
+
+```{r}
+#join those PCs back to the main data
+
+#main data, just the dependent variable
+campaign_data_2_y <- select(campaign_data2, Response) 
+
+#combine PCs and dependent variable
+PC_data <- cbind(campaign_data_2_y, PCA5)
+PC_data
+```
+
+
+##Logit model w/ PC data
+```{r}
+logit_PC_mod= glm(Response~., data=PC_data,family=binomial(link="logit"))
+summary(logit_PC_mod)
+```
+
+```{r}
+AIC(logit_PC_mod)
+BIC(logit_PC_mod)
+```
+
+##Probit Model w/ PC data
+```{r}
+probit_PC_mod= glm(Response~., data=PC_data,family=binomial(link="probit"))
+summary(probit_PC_mod)
+```
+
+```{r}
+AIC(probit_PC_mod)
+BIC(probit_PC_mod)
+```
+

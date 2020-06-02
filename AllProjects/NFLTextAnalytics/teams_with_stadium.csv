@@ -1,0 +1,32 @@
+,key,ID,Team_x,Name,conference,division,full_name,stadiumID,stadium_name,state_x,country,latitude,longitude,capacity,Average attendance,rank,city,state_y,population,2000-2013 growth
+0,ARI,1,Arizona,Cardinals,NFC,West,Arizona Cardinals,29,U of Phoenix Stadium,AZ,USA,33.527558,-112.263036,63400,62014,6,Phoenix,Arizona,1513367,14.0%
+1,ATL,2,Atlanta,Falcons,NFC,South,Atlanta Falcons,45,Mercedes-Benz Stadium,GA,USA,33.755000,-84.401000,71000,72898,40,Atlanta,Georgia,447841,6.2%
+2,BAL,3,Baltimore,Ravens,AFC,North,Baltimore Ravens,7,M&T Bank Stadium,MD,USA,39.277985,-76.622788,71008,70431,26,Baltimore,Maryland,622104,-4.0%
+3,BUF,4,Buffalo,Bills,AFC,East,Buffalo Bills,1,New Era Field,NY,USA,42.773758,-78.786837,73079,64962,73,Buffalo,New York,258959,-11.3%
+4,CAR,5,Carolina,Panthers,NFC,South,Carolina Panthers,26,Bank of America Stadium,NC,USA,35.225808,-80.852861,73778,73773,16,Charlotte,North Carolina,792862,39.1%
+5,CHI,6,Chicago,Bears,NFC,North,Chicago Bears,20,Soldier Field,IL,USA,41.862320,-87.616699,61500,61344,3,Chicago,Illinois,2718782,-6.1%
+6,CIN,7,Cincinnati,Bengals,AFC,North,Cincinnati Bengals,5,Paul Brown Stadium,OH,USA,39.095309,-84.516003,65535,50754,65,Cincinnati,Ohio,297517,-10.1%
+7,CLE,8,Cleveland,Browns,AFC,North,Cleveland Browns,6,FirstEnergy Stadium,OH,USA,41.505885,-81.699458,71516,65765,48,Cleveland,Ohio,390113,-18.1%
+8,DAL,9,Dallas,Cowboys,NFC,East,Dallas Cowboys,17,AT&T Stadium,TX,USA,32.747778,-97.092778,80000,91620,9,Dallas,Texas,1257676,5.6%
+9,DEN,10,Denver,Broncos,AFC,West,Denver Broncos,13,Broncos Stadium at Mile High,CO,USA,39.743936,-105.020097,76125,76446,22,Denver,Colorado,649495,16.7%
+10,DET,11,Detroit,Lions,NFC,North,Detroit Lions,21,Ford Field,MI,USA,42.340021,-83.045777,65000,62758,18,Detroit,Michigan,688701,-27.1%
+11,GB,12,Green Bay,Packers,NFC,North,Green Bay Packers,22,Lambeau Field,WI,USA,44.501389,-88.061944,80750,77835,272,Green Bay,Wisconsin,104779,1.9%
+12,HOU,13,Houston,Texans,AFC,South,Houston Texans,11,NRG Stadium,TX,USA,29.684722,-95.410707,71054,71805,4,Houston,Texas,2195914,11.0%
+13,IND,14,Indianapolis,Colts,AFC,South,Indianapolis Colts,9,Lucas Oil Stadium,IN,USA,39.760056,-86.163806,67000,59200,12,Indianapolis,Indiana,843393,7.8%
+14,JAX,15,Jacksonville,Jaguars,AFC,South,Jacksonville Jaguars,10,TIAA Bank Field,FL,USA,30.323813,-81.637199,67246,69074,13,Jacksonville,Florida,842583,14.3%
+15,KC,16,Kansas City,Chiefs,AFC,West,Kansas City Chiefs,15,Arrowhead Stadium,MO,USA,39.049002,-94.483864,76416,75973,37,Kansas City,Missouri,467007,5.5%
+17,LAC,29,Los Angeles,Chargers,AFC,West,Los Angeles Chargers,43,StubHub Center,CA,USA,33.858663,-118.256666,27000,32768,2,Los Angeles,California,3884307,4.8%
+18,LAR,32,Los Angeles,Rams,NFC,West,Los Angeles Rams,38,Los Angeles Memorial Coliseum,CA,USA,34.014167,-118.287778,93607,72430,2,Los Angeles,California,3884307,4.8%
+19,MIA,19,Miami,Dolphins,AFC,East,Miami Dolphins,2,Hard Rock Stadium,FL,USA,25.957740,-80.238781,76100,65560,44,Miami,Florida,417650,14.9%
+20,MIN,20,Minnesota,Vikings,NFC,North,Minnesota Vikings,42,U.S. Bank Stadium,MN,USA,44.974288,-93.329728,66655,66811,46,Minneapolis,Minnesota,400070,4.5%
+21,NE,21,New England,Patriots,AFC,East,New England Patriots,4,Gillette Stadium,MA,USA,42.090866,-71.264244,68756,65878,24,Boston,Massachusetts,645966,9.4%
+22,NO,22,New Orleans,Saints,NFC,South,New Orleans Saints,27,Mercedes-Benz Superdome,LA,USA,29.950931,-90.081364,73208,73051,51,New Orleans,Louisiana,378715,-21.6%
+23,NYG,23,New York,Giants,NFC,East,New York Giants,3,MetLife Stadium,NJ,USA,40.813611,-74.074444,82500,76941,1,New York,New York,8405837,4.8%
+24,NYJ,24,New York,Jets,AFC,East,New York Jets,3,MetLife Stadium,NJ,USA,40.813611,-74.074444,82500,77982,1,New York,New York,8405837,4.8%
+25,OAK,25,Oakland,Raiders,AFC,West,Oakland Raiders,16,Oakland Coliseum,CA,USA,37.751613,-122.200509,53200,57919,45,Oakland,California,406253,1.3%
+26,PHI,26,Philadelphia,Eagles,NFC,East,Philadelphia Eagles,18,Lincoln Financial Field,PA,USA,39.900771,-75.167469,68532,69696,5,Philadelphia,Pennsylvania,1553165,2.6%
+27,PIT,28,Pittsburgh,Steelers,AFC,North,Pittsburgh Steelers,8,Heinz Field,PA,USA,40.446751,-80.015707,65050,63456,62,Pittsburgh,Pennsylvania,305841,-8.3%
+28,SEA,30,Seattle,Seahawks,NFC,West,Seattle Seahawks,31,CenturyLink Field,WA,USA,47.595153,-122.331625,67000,69001,21,Seattle,Washington,652405,15.6%
+29,SF,31,San Francisco,49ers,NFC,West,San Francisco 49ers,37,Levi's Stadium,CA,USA,37.404108,-121.970274,68500,69149,14,San Francisco,California,837442,7.7%
+30,TEN,34,Tennessee,Titans,AFC,South,Tennessee Titans,12,Nissan Stadium,TN,USA,36.166441,-86.771253,69140,64520,25,Nashville-Davidson,Tennessee,634464,16.2%
+31,WAS,35,Washington,Redskins,NFC,East,Washington Redskins,19,FedEx Field,MD,USA,38.907652,-76.864479,85000,61028,23,Washington,District of Columbia,646449,13.0%

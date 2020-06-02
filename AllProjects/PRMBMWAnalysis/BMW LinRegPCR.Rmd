@@ -1,0 +1,128 @@
+---
+title: "PRM_FinalProject"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+pricing_data <- read.csv(file="Pricing_Engineered.csv", header=TRUE)
+pricing_data
+
+#checking data types
+str(pricing_data)
+```
+
+```{r}
+#change dates to date type
+pricing_data$registration_date <- as.Date(pricing_data$registration_date, "%m/%d/%Y")
+pricing_data$sold_at <- as.Date(pricing_data$sold_at, format = "%m/%d/%Y")
+```
+
+
+```{r}
+#checking data type changed correctly
+str(pricing_data)
+```
+
+```{r}
+#standardize numeric features
+pricing_data <- pricing_data %>% mutate_at(c("mileage", "engine_power", "AgeAtSale", "TotalFeatures"), ~(scale(.) %>% as.vector))
+
+head(pricing_data)
+```
+
+```{r}
+#remove age since it correlates highly with mileage, maker_key since they're all BMWs, and model_key since it correlates highly with model type and it's easier to look at 14 factors rather than 75
+library(dplyr)
+pricing_data2 <- select(pricing_data, -maker_key, -model_key, -AgeAtSale)
+head(pricing_data2)
+```
+
+```{r}
+#if we were to include age and remove mileage
+pricing_data2.1 <- select(pricing_data, -maker_key, -model_key, -mileage)
+```
+
+
+#Linear Regression
+##initial regression
+```{r}
+linreg <- lm(price ~ ., data=pricing_data2)
+summary(linreg)
+```
+We find from this initial regression that:
+-mileage, engine power, registration_date, fuel type, some car types, some model types, and all the features except Feature 5 seem to be siginificant predictors of price
+-Color and total features do not seem to matter, or rather total features correlates too highly with the features themselves
+
+##linear regression including age and not mileage
+```{r}
+linreg1 <- lm(price ~ ., data=pricing_data2.1)
+summary(linreg1)
+```
+As suspected, we do get more information from including mileage than from including age. Age doesn't even show as being signigicant. 
+
+
+##Re-run multiple linear regression excluding features found to not be significant
+```{r}
+pricing_data4 <- select(pricing_data2, -paint_color, -TotalFeatures)
+
+linreg2 <- lm(price ~ ., data=pricing_data4)
+summary(linreg2)
+```
+After re-running the multiple linear regression after removing paint_color and total_features from the data, we find that that we lose a neglible amount in terms of explainability. R-squared decreases by .007 and the adjusted R-squared only decreases by .001. 
+
+
+#Principal Component Regression
+```{r}
+require(pls)
+
+pricing_data3 <- select(pricing_data4, -ModelType) #remove non-numeric feature
+pcr_model <- pcr(price~ ., data = pricing_data3, scale = TRUE, validation = "CV")
+summary(pcr_model)
+```
+
+
+##plot to see best number of components to choose
+```{r}
+validationplot(pcr_model, val.type = "R2")
+```
+
+##create train test set
+```{r}
+set.seed(1) 
+train=sample(c(TRUE ,FALSE), nrow(pricing_data3),rep=TRUE)
+test=(!train) 
+pricing_train <- pricing_data3[train, ]
+pricing_test <- pricing_data3[test, ]
+
+pricing_train
+pricing_test
+```
+
+##run model using 4 PCs based on the plot
+```{r}
+pcr_predict <- predict(pcr_model, pricing_test, ncomp = 4)
+pcr_test_MSE= mean((pcr_predict - pricing_test$price)^2)
+pcr_test_MSE
+```
+
+## multiple linear regression using the same data
+```{r}
+##Linear model
+lm_fittrain= lm(price~., data=pricing_train) ##predict Apps using the above linear model using the test data 
+lm_predict <- predict(lm_fittrain, pricing_test) ##calculate the mean squared error of our prediction vs. the actual test data 
+lm_test_MSE= mean((lm_predict - pricing_test$price)^2)
+lm_test_MSE
+```
+We see that the principal component regression actually has a higher test MSE than the multiple linear regression model.
+
+
+
+
+
+
+
