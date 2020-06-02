@@ -1,0 +1,44 @@
+﻿@model sp18Team7Final.Models.Order
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "GiftSeats";
+}
+
+<h2>GiftSeats</h2>
+
+<div>
+    <table class="table table-sm table-striped">
+        <tr>
+            <th>Movie Name</th>
+            <th>MPAA Rating</th>
+            <th>Date and Time</th>
+            <th>Seat</th>
+            <th>Theater</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (Ticket tck in Model.Tickets)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.Title)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.MPAARating)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.StartTime)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Seat)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Theater)</td>
+                @if (tck.Showtime.StartTime.AddHours(-1) > DateTime.Now)
+                {
+                    <td>@Html.ActionLink("Change Seat", "EditTicket", "Orders", new { id = tck.TicketID }, new { @class = "Btn btn-default" })</td>
+                }
+            </tr>
+
+        }
+
+
+
+        </table>
+    </div>
+
+@Html.ActionLink("Back to Orders", "Index", new { id = Model.AppUser.Id})
+
+

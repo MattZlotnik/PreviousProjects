@@ -1,0 +1,49 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Ticket>
+
+@{
+    ViewBag.Title = "PopcornPointsReport";
+}
+
+<h2>Popcorn Points Report</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Showtime.Movie.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Showtime.Schedule.ScheduleDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.AppUser.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.AppUser.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.OrderDate)
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Showtime.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Showtime.Schedule.ScheduleDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.AppUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.AppUser.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.OrderDate)
+            </td>
+        </tr>
+    }
+
+</table>

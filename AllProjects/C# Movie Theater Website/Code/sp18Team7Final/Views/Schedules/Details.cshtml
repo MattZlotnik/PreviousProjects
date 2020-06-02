@@ -1,0 +1,61 @@
+﻿@model sp18Team7Final.Models.Schedule
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Schedule</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduleDate)
+        </dd>
+
+        @if (User.IsInRole("Manager") || User.IsInRole("Employee"))
+        {
+        <dt>
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completed)
+        </dd>
+        }
+    </dl>
+</div>
+
+<div>
+    <table class="table table-sm table-striped">
+        <tr>
+            <th>Movie</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Theater</th>
+            <th>Special Event</th>
+        </tr>
+        @foreach (Showtime st in Model.Showtimes)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => st.Movie.Title)</td>
+            <td>@Html.DisplayFor(modelItem => st.StartTime)</td>
+            <td>@Html.DisplayFor(modelItem => st.EndTime)</td>
+            <td>@Html.DisplayFor(modelItem => st.Theater)</td>
+            <td>@Html.DisplayFor(modelItem => st.SpecialEvent)</td>
+        </tr>
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Copy Schedule", "CopySchedule", new { id = Model.ScheduleID}) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ScheduleID }) |
+    @Html.ActionLink("Back to List", "AllSchedules")
+</p>

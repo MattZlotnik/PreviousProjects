@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "SummaryReport";
+}
+
+<h2>SummaryReport</h2>
+
+@if (ViewBag.TotalRevenue != null)
+{
+    <h5>Total Revenue:</h5>
+    @ViewBag.TotalRevenue
+}
+
+@if (ViewBag.TotalSeats != null)
+{
+    <h5>Total Seats Sold:</h5>
+    @ViewBag.TotalSeats
+}

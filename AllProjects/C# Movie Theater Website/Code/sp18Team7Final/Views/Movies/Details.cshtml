@@ -1,0 +1,91 @@
+﻿@model sp18Team7Final.Models.Movie
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tagline)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tagline)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MPAARating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MPAARating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerRatingAverage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerRatingAverage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actors)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actors)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Runtime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Runtime)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table table-sm table-striped table-hover">
+    
+
+         <font class="font-weight-bold">@Html.DisplayNameFor(model => Model.Genres)</font> <br />
+
+    
+
+    @foreach (Genre gen in Model.Genres)
+    {
+        <tr> @Html.DisplayFor(modelItem => gen.GenreName)</tr>
+    }
+</table>
+<dd>
+    @Html.ActionLink("Buy Tickets", "AddToOrder", "Orders", new { id = Model.MovieID }, null)
+</dd>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MovieID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

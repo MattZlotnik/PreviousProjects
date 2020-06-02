@@ -1,0 +1,20 @@
+﻿@model sp18Team7Final.Models.ChangeAddressViewModel
+<h2>Change Address</h2>
+@using (Html.BeginForm("ChangeAddress", "Accounts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Change Address Form</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewAddress, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NewAddress, new { type = "date" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Change address" class="btn btn-default" />
+        </div>
+    </div>
+}

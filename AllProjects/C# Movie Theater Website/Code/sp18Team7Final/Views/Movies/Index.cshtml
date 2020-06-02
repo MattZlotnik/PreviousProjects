@@ -1,0 +1,130 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Movie>
+@using sp18Team7Final.Models
+@using sp18Team7Final.Controllers
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using Microsoft.Owin.Security
+@using sp18Team7Final.DAL
+
+@using (Html.BeginForm())
+{
+    <p class="form-group">
+        @Html.ActionLink("Search for Movies", "DetailedSearch", null, new { @class = "btn btn=default" })
+        @Html.ActionLink("Show All", "Index", null, new { @class = "btn btn-default" })
+    </p>
+}
+
+Displaying @ViewBag.SelectedMovies out of @ViewBag.TotalMovies movies.
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Index</h2>
+@if (User.IsInRole("Manager"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MPAARating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerRatingAverage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Runtime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Showtimes)
+        </th>
+        <th>
+        </th>
+        <th></th>
+    </tr>
+
+
+
+
+
+    @foreach (var item in Model)
+    {
+
+
+        string genres = "";
+        int counter = 1;
+        int MovieID = item.MovieID;
+        string showtimes = "";
+        foreach (Showtime x in item.Showtimes)
+        {
+            showtimes += (x.StartTime + "\n");
+        }
+        foreach (Genre x in item.Genres)
+        {
+            genres += x.GenreName;
+            if (counter != item.Genres.Count())
+            {
+                genres += ", ";
+                counter += 1;
+            }
+        }
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => genres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MPAARating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerRatingAverage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Runtime)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => showtimes)
+            </td>
+            <td>
+                @if (User.IsInRole("Employee") || User.IsInRole("Manager"))
+                {
+                @Html.ActionLink("Buy Tickets", "AddToCustomerOrder", "Orders", new { id = item.MovieID }, null)
+                }
+                else
+                {
+                    @Html.ActionLink("Buy Tickets", "AddToOrder", "Orders", new { id = item.MovieID }, null)
+                }
+                
+            </td>
+            <td>
+                @Html.ActionLink("Reviews", "Index", "Reviews", new { id = item.MovieID }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.MovieID })
+            </td>
+        </tr>
+    }
+
+</table>

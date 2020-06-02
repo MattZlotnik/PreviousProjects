@@ -1,0 +1,60 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Showtime>
+@using sp18Team7Final.Models
+
+
+@{
+    ViewBag.Title = "RemoveFromSchedule";
+}
+
+<font color="red">@ViewBag.PastShowtime</font>
+<h2>RemoveFromSchedule</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create") | 
+    @Html.ActionLink("View All Schedules", "AllSchedules", "Schedules", null, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Movie.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Theater)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecialEvent)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Movie.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Theater)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialEvent)
+        </td>
+        <td>
+            @Html.ActionLink("Reschedule", "Edit", "Showtimes", new { id = item.ShowtimeID }, null) |
+            @Html.ActionLink("Delete", "Delete", "Showtimes", new { id = item.ShowtimeID }, null)
+        </td>
+    </tr>
+}
+
+</table>

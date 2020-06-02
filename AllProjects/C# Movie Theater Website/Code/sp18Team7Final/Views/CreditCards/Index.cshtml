@@ -1,0 +1,52 @@
+﻿@model IEnumerable<sp18Team7Final.Models.CreditCard>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.Raw(TempData["msg"])
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DisplayString)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Expiration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CVV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayString)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Expiration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CVV)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CreditCardID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CreditCardID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CreditCardID })
+        </td>
+    </tr>
+}
+
+</table>

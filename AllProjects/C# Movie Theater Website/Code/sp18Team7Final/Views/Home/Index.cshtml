@@ -1,0 +1,28 @@
+﻿@using sp18Team7Final.Models
+@using Microsoft.AspNet.Identity.Owin
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.ActionLink("Movies", "Index", "Movies", null, new { @class = "btn btn-primary" })
+
+@Html.ActionLink("Today's Schedule", "Index", "Schedules")
+
+@if (Request.IsAuthenticated)
+{
+    @Html.ActionLink("My Orders", "Index", "Orders", new { id = User.Identity.GetUserId() })
+
+    if (User.IsInRole("Manager"))
+    {
+        @Html.ActionLink("View Reports", "Reports", "Tickets", null, new { @class = "btn btn-info"})
+    }
+}
+else
+{
+    @Html.ActionLink("Log In", "Index", "Accounts", null, new { @class = "btn btn-warning" })
+}
+
+<h2>Index</h2>
+

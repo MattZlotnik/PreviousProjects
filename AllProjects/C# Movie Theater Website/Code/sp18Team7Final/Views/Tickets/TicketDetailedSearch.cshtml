@@ -1,0 +1,55 @@
+﻿@using sp18Team7Final.Models;
+
+@using sp18Team7Final.Controllers
+@{
+    ViewBag.Title = "TicketDetailedSearch";
+}
+
+<h2>Summary Report</h2>
+<h3>Input your filtering criteria:</h3>
+
+
+@using (Html.BeginForm("DisplayTicketSearchResults", "Tickets", FormMethod.Get))
+{
+    <p class="form-group">
+        Type of Report:
+        <div class="form-group">
+            <label class="radio">@Html.RadioButton("RevenueOrSeats", ChosenReport.Both, true)Both</label>
+            <label class="radio">@Html.RadioButton("RevenueOrSeats", ChosenReport.Revenue)Total Revenue</label>
+            <label class="radio">@Html.RadioButton("RevenueOrSeats", ChosenReport.SeatsSold)Total Seats Sold</label>
+        </div>
+
+        Date range:
+        <div class="form-group">
+            Beginning date:<input type="date" name="datBeginningDate" class="form-control" />
+            <br />
+            Ending date:<input type="date" name="datEndingDate" class="form-control" />
+        </div>
+
+        Movie: @Html.TextBox("MovieSearchString", null, new { @class = "form-control" }) <br />
+
+        MPAA Rating: 
+        <div class="form-group">
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.All, true)All</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.G)G</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.PG)PG</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.PG13)PG-13</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.R)R</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.NC17)NC-17</label>
+            <label class="radio">@Html.RadioButton("SelectedMPAARating", MPAARating.Unrated)Unrated</label>
+        </div>
+        
+        @*@Html.DropDownList("SelectMPAARating", (SelectList)ViewBag.AllMPAARatings, new { @class = "form-control" }) <br />*@
+
+        Time of Day:
+        <div class="form-group">
+            <label class="radio">@Html.RadioButton("Daytime", TimeOfDay.AllDay, true)All Day</label>
+            <label class="radio">@Html.RadioButton("Daytime", TimeOfDay.Morning)Morning (Opening - 12pm)</label>
+            <label class="radio">@Html.RadioButton("Daytime", TimeOfDay.Afternoon)Afternoon (12pm - 5pm)</label>
+            <label class="radio">@Html.RadioButton("Daytime", TimeOfDay.Evening)Evening (5pm - 8pm)</label>
+            <label class="radio">@Html.RadioButton("Daytime", TimeOfDay.Night)Night (8pm - Closing)</label>
+        </div>
+
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+}

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Order>
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Order Date
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            Tickets
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDate)
+        </td>
+        <td>
+            @if (item.CompletedOrder == false)
+            {
+                @Html.DisplayName("Pending")
+            }
+            else if (item.PaymentMethod == PaymentMethod.PopcornPoints)
+            {
+                int PopcornAmount = item.Tickets.Count() * 100;
+                String PopcornString = PopcornAmount.ToString();
+                @Html.DisplayName(PopcornString + " Points")
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Total)
+            }
+        </td>
+       <td>
+           @{ 
+               int count = item.Tickets.Count();
+           }
+           @Html.DisplayName(count.ToString())
+       </td>
+        <td>
+            @if (item.CancelledOrder == true)
+            {
+                @Html.DisplayName("Cancelled");
+            }
+            @if(item.CancelledOrder == false)
+            {
+                if (item.Gift == true && (item.DiscountType != "" && item.DiscountType != null))
+                {
+                    @Html.DisplayName("You gifted this order to a friend"); <br />
+                    @Html.ActionLink("Change Seats", "GiftSeats", new { id = item.OrderID})
+                }
+                else if(item.Gift == true && (item.DiscountType != "" && item.DiscountType != null))
+                {
+                    @Html.DisplayName("You received this order from a friend"); <br />
+                    @Html.ActionLink("Change Seats", "GiftSeats", new { id = item.OrderID})
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Edit", new { id = item.OrderID }); <br/>
+                }
+
+            }
+        </td>
+    </tr>
+            
+}
+
+</table>

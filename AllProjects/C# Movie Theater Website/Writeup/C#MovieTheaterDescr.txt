@@ -1,0 +1,10 @@
+C# Movie Theater Project:
+
+The goal of this project was to use C# and Visual Studio to create a website and 
+backend database which would allow for the full functionality expected from a movie
+theater's website. Primary functions included buying, gifting, and refunding tickets
+as well as checking and spending rewards earned from purchases. Other functionality
+included employees' ability to give tickets to customers, manage their own rewards, and
+adjust movie schedules for the week. Additional functionality included managerial 
+accounts which had all powers of employee accounts with additional responsibility of 
+managing employee accounts and creating initial movie schedules. 

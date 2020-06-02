@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@model IEnumerable<sp18Team7Final.Models.Review>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Html.Raw(TempData["msg"])
+<h2>Index</h2>
+
+<p>
+    @if (ViewBag.DidUserPurchase == true)
+    {
+        @Html.ActionLink("Create New", "Create", "Reviews", new { id = ViewBag.MovieID }, null);
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Approved)
+        </th>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalVotes)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Approved)
+            </td>
+            <td>
+                @Html.ActionLink("Downvote", "DownvoteReview", new { reviewID = item.ReviewID, movieID = ViewBag.MovieID }, null) or
+                @Html.ActionLink("Upvote", "UpvoteReview", new { reviewID = item.ReviewID, movieID = ViewBag.MovieID }, null) this review
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalVotes)
+            </td>
+            <td>
+                @if((item.AppUser.Id == User.Identity.GetUserId()) || User.IsInRole("Manager") == true || User.IsInRole("Manager") == true)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ReviewID });
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.ReviewID }) |
+            </td>
+        </tr>
+    }
+
+</table>

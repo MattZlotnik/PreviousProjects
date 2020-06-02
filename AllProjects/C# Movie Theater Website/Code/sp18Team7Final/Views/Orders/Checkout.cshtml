@@ -1,0 +1,90 @@
+﻿@model sp18Team7Final.Models.Order
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+
+<h2>Checkout</h2>
+
+<font color="red">@ViewBag.PaymentError</font>
+
+<table class="table table-sm table-bordered">
+    <tr>
+        <th colspan="2" style="text-align: center">
+            Order Summary
+        </th>
+    </tr>
+    <tr>
+        <td>
+            Discounts
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Subtotal)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Tax)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Total)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{ String Discounts = "";
+                foreach (String str in Model.DiscountNames)
+                {
+                    if (Discounts.Contains(str) == false)
+                    {
+                        Discounts += " " + str;
+                    }
+                }
+             }
+            @Html.DisplayName(Discounts)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Subtotal)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.Tax)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.Total)
+        </td>
+    </tr>
+</table>
+
+@using (Html.BeginForm("Checkout", "Orders", FormMethod.Post))
+{
+<div class="form-group">
+    Select Payment Method:<br />
+    @Html.HiddenFor(o => o.OrderID)
+    <div class="form-group">
+        <label class="radio">@Html.RadioButton("PaymentMethod", "NewCard")Enter a New Card Number</label><br />
+        @Html.TextBox("NewCardNumber", null, new { @class = "form-control" })<br /><br />
+        <label class="radio">@Html.RadioButton("PaymentMethod", "ExistingCard")Select Existing Credit Card</label><br />
+        @Html.DropDownList("SelectedCard", (SelectList)ViewBag.AllCards, new { @class = "form-control" })<br /><br />
+        <label class="radio">@Html.RadioButton("PaymentMethod", "PopcornPoints")Popcorn Points</label> | Current Balance: @Model.AppUser.PopcornPoints
+    </div>
+    <div class="form-group">
+        If this is a gift, enter the recipients email below <br />
+        @Html.TextBox("GiftEmail", null, new { @class = "form-control" })
+    </div>
+
+
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Checkout" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+

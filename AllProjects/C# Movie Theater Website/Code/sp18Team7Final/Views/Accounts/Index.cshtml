@@ -1,0 +1,48 @@
+﻿@model sp18Team7Final.Models.IndexViewModel
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@{
+    ViewBag.Title = "Manage";
+}
+<h2>@ViewBag.Title.</h2>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Email:</dt>
+        <dd>@Model.Email</dd>
+        <dt>Name:</dt>
+        <dd>@Model.Name</dd>
+
+        @Html.ActionLink("View your reviews", "IndexByUser", "Reviews", new { id = User.Identity.GetUserId() }, null)
+
+        <dt>Popcorn Points</dt>
+        <dd>@Model.PopcornPoints</dd>
+
+        <dt>Address</dt>
+        <dd>@Model.Address</dd>
+        [@Html.ActionLink("Change your address", "ChangeAddress")]
+
+        <dt>Phone Number</dt>
+        <dd>@Model.PhoneNumber</dd>
+        [@Html.ActionLink("Change your phone number", "ChangePhoneNumber")]
+
+        <dt>Birthday</dt>
+        <dd>@Model.Birthday.ToShortDateString()</dd>
+
+        [@Html.ActionLink("Manage your credit cards", "Index", "CreditCards", new { id = Model.UserID }, null)]
+
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            ]
+
+        </dd>
+    </dl>
+
+</div>
+<hr />

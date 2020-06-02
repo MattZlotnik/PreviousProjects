@@ -1,0 +1,80 @@
+﻿@model sp18Team7Final.Models.Order
+@using sp18Team7Final.Models
+@using sp18Team7Final.DAL
+
+@{
+    ViewBag.Title = "Confirm";
+}
+
+<h2>Confirm</h2>
+
+<div>
+    <table class="table table-sm table-striped">
+        <tr>
+            <th>Movie Name</th>
+            <th>MPAA Rating</th>
+            <th>Date and Time</th>
+            <th>TicketPrice</th>
+            <th>Seat</th>
+            <th>Theater</th>
+
+        </tr>
+        @foreach (Ticket tck in Model.Tickets)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.Title)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.MPAARating)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.StartTime)</td>
+                <td>@Html.DisplayFor(modelItem => tck.PriceAtPayment)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Seat)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Theater)</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+@if (Model.PaymentMethod == sp18Team7Final.Models.PaymentMethod.Card)
+{
+    <dt>
+        Payment Method: Credit Card
+    </dt>
+    <dd>
+        @ViewBag.HiddenCard
+    </dd>
+}
+else
+{
+    <dt>
+        Payment Method: Popcorn Points
+    </dt>
+}
+
+@if (Model.DiscountType != "")
+{
+    <dt>
+        Gifted to User with Email: @ViewBag.RecipientEmail
+    </dt>
+    <dd>
+        @ViewBag.GiftEmail
+    </dd>
+}
+
+<dt>
+    @Html.DisplayNameFor(model => model.Total)
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.Total)
+</dd>
+
+@using (Html.BeginForm("Confirm", "Orders", FormMethod.Post))
+{
+    @Html.HiddenFor(o => o.OrderID)
+    <div class="form-group">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Complete Order" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

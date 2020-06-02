@@ -1,0 +1,34 @@
+﻿@model sp18Team7Final.Models.Movie
+
+@{
+    ViewBag.Title = "AddToCustomerOrder";
+}
+
+<h2>AddToCustomerOrder</h2>
+
+@using (Html.BeginForm())
+{
+<div class="form-group">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MovieID)
+
+    <font color="red">@ViewBag.CustomerError</font><br />
+
+    Please enter the email of the customer you are purchasing for:
+    @Html.TextBox("useremail", null, new { @class = "form-control" }) <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Choose Customer" class="btn btn-default" />
+        </div>
+    </div>
+
+
+</div>
+
+    
+
+
+
+}

@@ -1,0 +1,110 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Schedule>
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movie Schedule</h2>
+
+@Html.ActionLink("View all Schedules", "AllSchedules")
+@using (Html.BeginForm("ScheduleSearch", "Schedules", FormMethod.Get))
+{
+    <p class=" form-group">
+        Date: <input type="date" name="datSelectedDate" class=" form-control" />
+        <input type="submit" value="Select Date" class=" btn btn-default" />
+    </p>
+}
+You are viewing the schedule for @ViewBag.DateMessage <br />
+<font color="red">@ViewBag.NoShowTime</font>
+
+<p>
+    @Html.ActionLink("Create New Schedule", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            MPAA Rating
+        </th>
+        <th>
+            Average Customer Rating
+        </th>
+        <th>
+            Seats Available
+        </th>
+        <th>
+            Start Time
+        </th>
+        <th>
+            End Time
+        </th>
+        <th>
+            Theater
+        </th>
+        <th>
+            Special Event
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        foreach (Showtime showtime in item.Showtimes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.Movie.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.Movie.MPAARating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.Movie.CustomerRatingAverage)
+                </td>
+                <td>
+                @{  int TicketsLeft = 0;
+                    foreach (Ticket tick in showtime.Tickets)
+                    {
+                        if(tick.Taken == false)
+                        {
+                            TicketsLeft += 1;
+                        }
+                    }
+                    String TicketsShow = TicketsLeft.ToString();
+                }
+                @Html.DisplayName(TicketsShow)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.Theater)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => showtime.SpecialEvent)
+                </td>
+                <td>
+                    @if (User.IsInRole("Employee") || User.IsInRole("Manager"))
+                    {
+                        @Html.ActionLink("Buy Tickets", "AddToCustomerOrder", "Orders", new { id = showtime.Movie.MovieID }, null);
+                    }
+
+                    else
+                    {
+                        @Html.ActionLink("Buy Tickets", "AddToOrder", "Orders", new { id = showtime.Movie.MovieID }, null)
+                    }
+
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>

@@ -1,0 +1,95 @@
+﻿@model sp18Team7Final.Models.Order
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<font color="red">@ViewBag.DeleteError</font>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Order</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.OrderID)
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @if(Model.Gift == true && (Model.DiscountType == "" || Model.DiscountType == null))
+                {
+                    @Html.DisplayName("This order was gifted to you");
+                }
+                else if (Model.Gift == true)
+                {
+                    @Html.DisplayName("You gifted this order to a friend");
+                }
+            </div>
+        </div>
+    </div>
+}
+    <font color="red">@ViewBag.EmptyOrder</font>
+    <div>
+        <table class="table table-sm table-striped">
+            <tr>
+                <th>Movie Name</th>
+                <th>MPAA Rating</th>
+                <th>Date and Time</th>
+                <th>Seat</th>
+                <th>Theater</th>               
+                <th></th>
+                <th></th>
+
+
+            </tr>
+            @foreach (Ticket tck in Model.Tickets)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.Title)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Movie.MPAARating)</td>
+                @{ String DateDisplay = tck.Showtime.StartTime.ToShortDateString() + " " + tck.Showtime.StartTime.ToShortTimeString();}
+                <td>@Html.DisplayName(DateDisplay)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Seat)</td>
+                <td>@Html.DisplayFor(modelItem => tck.Showtime.Theater)</td>
+                @if (tck.Showtime.StartTime.AddHours(-1) > DateTime.Now)
+                {
+                    if (tck.Order.CompletedOrder == true)
+                    {
+                        if (Model.Gift == false)
+                        {
+                            <td>@Html.ActionLink("Cancel Ticket", "CancelTicket", "Orders", new { id = tck.TicketID }, new { @class = "Btn btn-default" })</td>                            
+                        }
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Remove Ticket", "RemoveFromOrder", "Orders", new { id = tck.TicketID }, new { @class = "Btn btn-default" })</td>
+                    }
+                    <td>@Html.ActionLink("Change Seat", "EditTicket", "Orders", new { id = tck.TicketID }, new { @class = "Btn btn-default" })</td>
+
+                }
+            </tr>
+            }
+        </table>
+    </div>
+
+
+<div>
+    @if(Model.CompletedOrder == false)
+    {
+        @Html.ActionLink("Find More Movies", "Index", "Movies", null, new {@class = "Btn btn-default"}) <br/>
+        @Html.ActionLink("Checkout", "Checkout", new { id = Model.OrderID })
+    }
+    
+    @if(Model.CompletedOrder == true && Model.Gift == false)
+    {
+        @Html.ActionLink("Cancel Order", "CancelOrder", "Orders", new { id = Model.OrderID}, null)
+    }
+</div>
+
+<div>
+    @Html.ActionLink("My Orders", "Index")
+</div>

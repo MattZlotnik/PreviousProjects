@@ -1,0 +1,20 @@
+﻿@model sp18Team7Final.Models.ChangeBirthdayViewModel
+<h2>Change Birthday</h2>
+@using (Html.BeginForm("ChangeBirthday", "Accounts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Change Birthday Form</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewBirthday, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NewBirthday, new { type = "date" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Change birthday" class="btn btn-default" />
+        </div>
+    </div>
+}

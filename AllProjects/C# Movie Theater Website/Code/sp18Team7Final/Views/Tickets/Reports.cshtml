@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h2>Reports</h2>
+
+@Html.ActionLink("Summary Report", "TicketDetailedSearch", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Popcorn Points Report", "PopcornPointsReport", null, new { @class = "btn btn-info" })
+@Html.ActionLink("Report by Customers", "ReportsByCustomer", "Orders", new { strsearchstring = "" }, new { @class = "btn btn-danger" })

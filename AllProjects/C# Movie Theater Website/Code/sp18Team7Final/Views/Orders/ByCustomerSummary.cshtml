@@ -1,0 +1,75 @@
+﻿@model IEnumerable<sp18Team7Final.Models.Order>
+@using sp18Team7Final.Models
+
+@{
+    ViewBag.Title = "Summary by Customer";
+}
+
+<h2>Summary by Customer</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                Payment Method
+            </th>
+            <th>
+                Number of Tickets
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentMethod)
+                </td>
+                <td>
+                    @{ int TicketNumber = item.Tickets.Count();}
+                    @if(TicketNumber == 0)
+                    {
+                        @Html.DisplayName("This order was given as a gift")
+                    }
+                    else
+                    {
+                        @Html.DisplayName(TicketNumber.ToString())
+                    }
+                    
+                </td>
+                <td>
+                    @if(item.Total==0)
+                    {
+                        @Html.DisplayName("This was received as a gift")
+                    }
+                    else if(item.PaymentMethod == PaymentMethod.PopcornPoints)
+                    {
+                        int PopPoints = item.Tickets.Count() * 100;
+                        String PopString = PopPoints.ToString() + " Popcorn Points";
+                        @Html.DisplayName(PopString)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Total)
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>

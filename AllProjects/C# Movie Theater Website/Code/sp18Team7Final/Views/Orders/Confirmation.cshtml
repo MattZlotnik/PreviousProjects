@@ -1,0 +1,18 @@
+﻿@model sp18Team7Final.Models.Order
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<h2>Your Confirmation Page</h2>
+
+<p>Thank you for your purchase! Enjoy your movie (:</p>
+<div>
+    Your transaction ID is: 
+    @Html.DisplayFor(model => model.OrderNumber)
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to Home", "Index")
+</div>

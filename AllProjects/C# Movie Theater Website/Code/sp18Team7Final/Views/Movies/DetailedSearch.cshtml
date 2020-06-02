@@ -1,0 +1,47 @@
+﻿@using sp18Team7Final.Controllers
+@using sp18Team7Final.Models
+
+
+
+@{
+    ViewBag.Title = "DetailedSearch";
+}
+
+<h2>DetailedSearch</h2>
+
+<div class="text-danger"> @ViewBag.ReleaseYearErrorMessage</div>
+<div class="text-danger"> @ViewBag.RatingErrorMessage</div>
+
+@using (Html.BeginForm("DisplaySearchResults", "Movies", FormMethod.Get))
+{
+    <p class=" form-group">
+        Search Movie Title or Tagline: @Html.TextBox("SearchString", null, new {@class = "form-control" })
+
+        Search Release Year: @Html.TextBox("ReleaseYearString", null, new { @class = "form-control"}) <br/>
+        <div class="form-group">
+            <label class="radio"> @Html.RadioButton("BeforeAfter", BeforeAfter.After, true)After</label>
+            <label class="radio"> @Html.RadioButton("BeforeAfter",BeforeAfter.Before)Before</label>
+        </div>
+
+        Search MPAA Rating:
+        <div class="form-group">
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.All, true)All</label>
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.G)G</label>
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.PG)PG</label>
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.PG13)PG13</label>
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.R)R</label>
+            <label class="radio"> @Html.RadioButton("MPAARating", MPAARating.NC17)NC17</label>
+        </div>
+
+        Search by Genre: @Html.DropDownList("SelectedGenres", (MultiSelectList)ViewBag.Genres, new { multiple = "multiple"})<br/>
+
+        Search Minimum Average Customer Rating: @Html.TextBox("RatingString", null, new { @class = "form-control"})<br/>
+
+        Search Actor: @Html.TextBox("ActorString", null, new { @class = "form-control"})<br/>
+
+        <input type="submit" value="Search" class="btn btn-default" />
+
+        
+    </p>
+    
+}
